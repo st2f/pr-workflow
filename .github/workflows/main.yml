@@ -28,13 +28,16 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-              return (
-                await github.rest.repos.pulls.listFiles({
-                  pull_number: ${{ matrix.id }},
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                })
-              )
+            getPullRequestFiles = (pullNumber: number) => {
+              const Github = getOctokit(${{ github.token }}).rest;
+              return Github.pulls.listFiles({
+                pull_number: ${{ matrix.id }},
+                repo: context.repo.repo,
+                owner: context.repo.owner
+              }).then((res) => res.data);
+            }
+
+              
       - name: results
         run: |
           echo '${{ steps.get-data.outputs.result }}'
