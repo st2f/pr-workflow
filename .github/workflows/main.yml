@@ -29,6 +29,7 @@ jobs:
           -H "X-GitHub-Api-Version: 2022-11-28" \
           /repos/st2f/pr-workflow/pulls/1/files | jq '.[] | .filename | @sh' \
           | tr -d \'\" | tr '\n' ' ' > res.txt
-          KEYS=`cat res.txt`
-          ls $KEYS
+          files=`cat res.txt`
+          #ls $KEYS
+          egrep 'done' $files
           echo done
