@@ -27,17 +27,12 @@ jobs:
         if: github.ref == ${{ matrix.ref }}
         uses: actions/github-script@v7
         with:
-          script: |
-            getPullRequestFiles = (pullNumber: number) => {
-              const Github = getOctokit(${{ github.token }}).rest;
-              return Github.pulls.listFiles({
-                pull_number: ${{ matrix.id }},
-                repo: context.repo.repo,
-                owner: context.repo.owner
-              }).then((res) => res.data);
-            }
-
-              
+          script: |              
+            github.rest.repos.pulls.listFiles({
+              pull_number: ${{ matrix.id }},
+              owner: ${{ github.actor }},
+              repo: ${{ github.repository }},
+            })  
       - name: results
         run: |
           echo '${{ steps.get-data.outputs.result }}'
