@@ -25,7 +25,7 @@ jobs:
       - 
         id: get-data
         if: github.ref == ${{ matrix.ref }}
-        uses: actions/githubget_pr_data-script@v7
+        uses: actions/github-script@v7
         with:
           script: |
               return (
