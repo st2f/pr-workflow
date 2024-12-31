@@ -28,7 +28,7 @@ jobs:
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           /repos/st2f/pr-workflow/pulls/1/files | jq '.[] | .filename | @sh' \
-          | tr -d \'\" > res.txt
+          | tr -d \'\" | tr '\n' ' ' > res.txt
           KEYS=`cat res.txt`
           ls $KEYS
           echo done
