@@ -4,8 +4,8 @@ on:
       - 'feature*'
       
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  get-pr:
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         include:
@@ -13,9 +13,6 @@ jobs:
             id: 1
           #- branchName: 'feature2'
            # prId: 2
-            
-  get-pr:
-    runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: read
