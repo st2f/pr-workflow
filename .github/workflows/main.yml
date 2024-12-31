@@ -4,25 +4,41 @@ on:
       - 'feature*'
       
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - ref: 'refs/heads/feature1'
+            id: 1
+          #- branchName: 'feature2'
+           # prId: 2
+            
   get-pr:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: read
     steps:
-      - uses: actions/github-script@v7
-        id: get_pr_data
+      - 
+        id: info
+        run: |
+          ls
+          echo "${{ matrix.ref }}"
+      - 
+        id: get-data
+        if: github.ref == ${{ matrix.ref }}
+        uses: actions/githubget_pr_data-script@v7
         with:
           script: |
               return (
-                await github.rest.repos.listPullRequestsAssociatedWithCommit({
-                  commit_sha: context.sha,
+                await github.rest.repos.pulls.listFiles({
+                  pull_number: ${{ matrix.id }},
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                 })
-              ).data[0];
-      - name: Pull Request data
-          
+              )
+      - name: results
         run: |
-          echo '${{ steps.get_pr_data.outputs.result }}'
+          echo '${{ steps.get-data.outputs.result }}'
           echo done
