@@ -18,22 +18,13 @@ jobs:
       pull-requests: read
     steps:
       - 
-        id: info
-        run: |
-          ls
-          echo "${{ matrix.ref }}"
-      - 
         id: get-data
         if: github.ref == ${{ matrix.ref }}
         uses: actions/github-script@v7
         with:
-          script: |              
-            github.rest.repos.pulls.listFiles({
-              pull_number: ${{ matrix.id }},
-              owner: ${{ github.actor }},
-              repo: ${{ github.repository }},
-            })  
-      - name: results
-        run: |
-          echo '${{ steps.get-data.outputs.result }}'
-          echo done
+          run: |              
+            gh api \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/st2f/pr-workflow/pulls/1/files | jq '[.[] | .filename]'  
+            echo done
