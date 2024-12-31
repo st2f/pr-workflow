@@ -17,6 +17,8 @@ jobs:
       contents: read
       pull-requests: read
     steps:
+      - name: checkout
+        uses: actions/checkout@v4
       - id: get-data
         if: github.ref == ${{ matrix.ref }}
         env:
