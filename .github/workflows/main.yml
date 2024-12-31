@@ -25,7 +25,8 @@ jobs:
           gh api \
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
-          /repos/st2f/pr-workflow/pulls/1/files | jq '.[] | .filename' > res.txt
-          KEYS=$((<res.txt jq -r '.keys | @sh')| tr -d \')
-          echo $KEYS
+          /repos/st2f/pr-workflow/pulls/1/files | jq '.[] | .filename | @sh' \
+          | tr -d \'\" > res.txt
+          KEYS=`cat res.txt`
+          ls $KEYS
           echo done
