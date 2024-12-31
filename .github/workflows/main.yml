@@ -30,6 +30,5 @@ jobs:
           /repos/st2f/pr-workflow/pulls/1/files | jq '.[] | .filename | @sh' \
           | tr -d \'\" | tr '\n' ' ' > res.txt
           files=`cat res.txt`
-          #ls $KEYS
-          egrep 'done' $files
+          egrep 'done' $files >> $GITHUB_STEP_SUMMARY
           echo done
