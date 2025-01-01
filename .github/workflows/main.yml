@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v4
-      - id: get-data
+      - id: verify-pr-files
         if: github.ref == ${{ matrix.ref }}
         env:
           GH_TOKEN: ${{ github.token }}
@@ -27,9 +27,9 @@ jobs:
           gh api \
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
-          /repos/st2f/pr-workflow/pulls/1/files | jq '.[] | .filename | @sh' \
+          /repos/st2f/pr-workflow/pulls/${{ matrix.id }}/files | jq '.[] | .filename | @sh' \
           | tr -d \'\" | tr '\n' ' ' > res.txt
           files=`cat res.txt`
-          egrep --exclude=*.yml 'veritatis' $files && echo 'Error' >> $GITHUB_STEP_SUMMARY
-          echo '# Files checked :' >> $GITHUB_STEP_SUMMARY
+          egrep --exclude=*.yml 'veritatis' $files && echo '::cross:: Error found in the above files' >> $GITHUB_STEP_SUMMARY
+          echo '# Files in this PR :' >> $GITHUB_STEP_SUMMARY
           ls -al $files >> $GITHUB_STEP_SUMMARY
