@@ -31,6 +31,6 @@ jobs:
           | tr -d \'\" | tr '\n' ' ' > res.txt
           files=`cat res.txt`
           match=$(egrep --exclude=*.yml 'veritatis' $files)
-          [[ "$match" ]] && echo "❌ $match" >> $GITHUB_STEP_SUMMARY || echo "✅" >> $GITHUB_STEP_SUMMARY
+          [[ "$match" ]] && echo "❌ \n$match" >> $GITHUB_STEP_SUMMARY || echo "✅" >> $GITHUB_STEP_SUMMARY
           echo "# Files in this PR" >> $GITHUB_STEP_SUMMARY
           ls -al $files >> $GITHUB_STEP_SUMMARY
