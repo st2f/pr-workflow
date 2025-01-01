@@ -33,4 +33,4 @@ jobs:
           match=$(egrep --exclude=*.yml 'veritatisx' $files)
           #$match && echo $match >> $GITHUB_STEP_SUMMARY
           #echo "# Files in this PR" >> $GITHUB_STEP_SUMMARY
-          ls -al $files >> $GITHUB_STEP_SUMMARY
+          #ls -al $files >> $GITHUB_STEP_SUMMARY
