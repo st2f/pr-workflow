@@ -32,7 +32,7 @@ jobs:
           | tr -d \'\" | tr '\n' ' ' > res.txt 
           files=`cat res.txt`
           ls -al $files
-          output=$(egrep --exclude=*.yml 'veritatisx' "$files")
+          output=$(egrep --exclude=*.yml 'veritatisx' "$files" -n)
           if [-z "$output" ]
           then
               echo "nothing"
