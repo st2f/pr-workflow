@@ -4,7 +4,7 @@ on:
       - 'feature*'
       
 jobs:
-  get-pr:
+  check-pr:
     runs-on: ubuntu-24.04
     strategy:
       matrix:
@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v4
-      - id: verify-pr-files
+      - id: get-pr-files
         if: github.ref == ${{ matrix.ref }}
         env:
           GH_TOKEN: ${{ github.token }}
@@ -30,6 +30,6 @@ jobs:
           /repos/st2f/pr-workflow/pulls/${{ matrix.id }}/files | jq '.[] | .filename | @sh' \
           | tr -d \'\" | tr '\n' ' ' > res.txt
           files=`cat res.txt`
-          egrep --exclude=*.yml 'veritatis' $files && echo '::cross:: Error found in the above files' >> $GITHUB_STEP_SUMMARY
+          egrep --exclude=*.yml 'veritatis' $files && echo 'Error found in the above files' >> $GITHUB_STEP_SUMMARY
           echo '# Files in this PR :' >> $GITHUB_STEP_SUMMARY
           ls -al $files >> $GITHUB_STEP_SUMMARY
