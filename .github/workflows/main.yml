@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - 'feature*'
+
       
 jobs:
   check-pr:
