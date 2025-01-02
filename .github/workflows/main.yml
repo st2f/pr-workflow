@@ -11,8 +11,8 @@ jobs:
         include:
           - ref: 'refs/heads/feature1'
             id: 1
-          #- branchName: 'feature2'
-           # prId: 2
+          - ref: 'refs/heads/feature1'
+            prId: 2
     permissions:
       contents: read
       pull-requests: read
