@@ -31,7 +31,7 @@ jobs:
           /repos/st2f/pr-workflow/pulls/${{ matrix.id }}/files | jq '.[] | .filename | @sh' \
           | tr -d \'\" | tr '\n' ' ' > res.txt 
           files=`cat res.txt`
-          output=$(egrep --exclude=*.yml 'veritatisx' -Ins "$files")
-          echo $output >> $GITHUB_STEP_SUMMARY          
+          output=$(egrep --exclude=*.yml 'veritatis' -Ins "$files")
+          echo $output >> $GITHUB_STEP_SUMMARY    
           echo "# Files in this PR" >> $GITHUB_STEP_SUMMARY
           ls -al $files >> $GITHUB_STEP_SUMMARY
