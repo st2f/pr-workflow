@@ -11,7 +11,7 @@ jobs:
         include:
           - ref: 'refs/heads/feature1'
             id: 1
-          - ref: 'refs/heads/feature1'
+          - ref: 'refs/heads/feature2'
             prId: 2
     permissions:
       contents: read
